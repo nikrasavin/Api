@@ -20,9 +20,19 @@ response_repos = requests.get(
     URL_repos, headers={"Authorization": "token {}".format(token)}
 )
 
-print(response.json()["login"])
-print(response.json()["email"])
+login = response.json()["login"]
+email = response.json()["email"]
 
-for item in response_repos.json():
-    print(item["name"])
+repos = response_repos.json()
+
+
+
+with open("github_user_info.txt", "w") as file:
+        file.write(f"Login: {login}\n")
+        file.write(f"Email: {email}\n")
+        file.write("Repositories:\n")
+        for repo in repos:
+            file.write(f"- {repo["name"]}\n")
+
+print("Информация успешно сохранена в файл 'github_user_info.txt'.")
 
