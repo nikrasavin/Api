@@ -7,19 +7,22 @@ import os
 load_dotenv()
 token = os.getenv("API_TOKEN")
 
-URL = "https://api.github.com/user/repos"
+URL = "https://api.github.com/user"
 
-# ip_response = requests.get(IP_URL).json()
-
-# ip = ip_response["ip"]
-
-# LOCATOR_URL = f"https://locator.api.maps.yandex.ru/v1/locate?apikey={token}"
+URL_repos = "https://api.github.com/user/repos"
 
 
 response = requests.get(
     URL, headers={"Authorization": "token {}".format(token)}
 )
 
-for item in response.json():
+response_repos = requests.get(
+    URL_repos, headers={"Authorization": "token {}".format(token)}
+)
+
+print(response.json()["login"])
+print(response.json()["email"])
+
+for item in response_repos.json():
     print(item["name"])
 
